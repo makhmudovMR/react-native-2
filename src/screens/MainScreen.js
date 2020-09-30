@@ -4,12 +4,12 @@ import {AddTodo} from '../AddTodo'
 import {Todo} from '../Todo'
 
 
-export const MainScreen = ({addTodo, todos, removeTodo}) => {
+export const MainScreen = ({addTodo, todos, removeTodo, openTodo}) => {
     return (
-        <View>
+        <View> 
             <AddTodo addTodo={addTodo}/>
             {todos.map(item => {
-            return <Todo key={item.id} id={item.id} title={item.title}  onRemove={removeTodo}/> 
+            return <Todo key={item.id} onOpen={openTodo} todo={item} id={item.id} title={item.title}  onRemove={removeTodo}/> 
             })}
         </View>
     )

@@ -4,7 +4,10 @@ import {Text, StyleSheet, View, TouchableOpacity} from 'react-native'
 export const Todo = (props) => {
 
     return (
-        <TouchableOpacity activeOpacity={0.5} onPress={() => console.log('Pressed', props.id)} onLongPress={() => props.onRemove(props.id)}>
+        <TouchableOpacity 
+        activeOpacity={0.5} 
+        onPress={() => props.onOpen(props.todo.id)} 
+        onLongPress={() => props.onRemove(props.id)}>
             <View style={styles.card}>
                 <Text>{props.title}</Text>
             </View>
