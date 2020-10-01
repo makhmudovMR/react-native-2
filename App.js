@@ -20,15 +20,14 @@ export default function App() {
   const editTodo = (id, value) => {
     console.log('we are here')
     console.log(id, value)
-    setTodos((prev) => {
-      prev.map(item => {
-        if(item.id === id){
-          console.log(item)
-          item.title = value
+    setTodos(old =>
+      old.map(todo => {
+        if (todo.id === id) {
+          todo.title = value
         }
-        return item
+        return todo
       })
-    })
+    )
   }
 
   const addTodo = (title) => {
@@ -50,6 +49,11 @@ export default function App() {
       setTodoId(id)
     }}/>
   )
+  
+  console.log('----')
+  console.log('todosid ->',todoId)
+  console.log('todos->',todos)
+  console.log('----')
 
   if(todoId){
     const selected = todos.find(item => item.id === todoId)
