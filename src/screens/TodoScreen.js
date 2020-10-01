@@ -9,7 +9,10 @@ export const TodoScreen = (props) => {
     })
 
     const func = () => {
+        console.log(props.todo.id)
+        console.log(props.todo.title)
         console.log(data.id, data.title)
+        console.log('edit -- todo')
         props.editTodo(data.id, data.title)
     }
     

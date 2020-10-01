@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import { TextInput, View, Button, StyleSheet, Alert, ScrollView, ImagePropTypes } from 'react-native'
-
+import { TextInput, View, Button, StyleSheet, Alert, ScrollView, ImagePropTypes, Keyboard} from 'react-native'
+import { AntDesign } from '@expo/vector-icons';
 
 
 export const AddTodo = ({ addTodo, onRemove }) => {
@@ -12,6 +12,7 @@ export const AddTodo = ({ addTodo, onRemove }) => {
         if(value.trim()){
             addTodo(value)
             setValue('')
+            Keyboard.dismiss()
         } else {
             Alert.alert('Текстовое полу не может быть пустым')
             // error
@@ -28,7 +29,7 @@ export const AddTodo = ({ addTodo, onRemove }) => {
             autoCapitalize='words'
             onRemove={onRemove}
             />
-            <Button title="Add item" onPress={addItemHandler}/>
+            <AntDesign.Button name="pluscircleo" size={24} onPress={addItemHandler}>Add Item</AntDesign.Button>
         </View>
     )
 }

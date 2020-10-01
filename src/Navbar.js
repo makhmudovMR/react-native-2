@@ -1,9 +1,11 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet , Platform, Dimensions} from 'react-native'
 export const Navbar = ({title}) => {
+    const platform = (Platform.OS === 'android') ? 'Android' : 'iOS'
+    const screen = Dimensions.get('window').scale
     return (
         <View style={styles.navbar}>
-            <Text style={styles.text}>{title}</Text>
+            <Text style={styles.text}>{title} ({platform}) ({screen})</Text>
         </View>
     )
 }

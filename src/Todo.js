@@ -1,17 +1,18 @@
 import React from 'react'
-import {Text, StyleSheet, View, TouchableOpacity} from 'react-native'
+import {Text, StyleSheet, View, TouchableOpacity, TouchableNativeFeedback, Platform} from 'react-native'
 
 export const Todo = (props) => {
+    let Wrapper = (Platform.OS === 'android')? TouchableNativeFeedback : TouchableOpacity;
 
     return (
-        <TouchableOpacity 
+        <Wrapper 
         activeOpacity={0.5} 
         onPress={() => props.onOpen(props.todo.id)} 
         onLongPress={() => props.onRemove(props.id)}>
             <View style={styles.card}>
-                <Text>{props.title}</Text>
+                <Text style={styles.title}>{props.title}</Text>
             </View>
-        </TouchableOpacity>
+        </Wrapper>
     )
 }
 
@@ -22,6 +23,9 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderColor: '#000',
         marginTop: 5,
+    },
+    title:{
+        fontFamily:'robot-bold',
     }
 })
 
