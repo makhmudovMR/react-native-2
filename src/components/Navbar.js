@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { View, StyleSheet, Platform } from 'react-native'
 import { THEME } from '../theme'
 import { AppTextBold } from './ui/AppTextBold'
@@ -22,7 +22,7 @@ export const Navbar = ({ title }) => {
 const styles = StyleSheet.create({
   navbar: {
     height: 70,
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'flex-end',
     paddingBottom: 10
   },
@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: Platform.OS === 'ios' ? THEME.MAIN_COLOR : '#fff',
-    fontSize: 20
+    fontSize: 20,
+    marginLeft:30
   }
 })

@@ -49,7 +49,11 @@ export const TodoState = ({ children }) => {
         {
           text: 'Удалить',
           style: 'destructive',
-          onPress: () => {
+          onPress: async () => {
+            await fetch(`https://rn-todo-app-7b0ea.firebaseio.com/todos/${id}.json`, {
+              method: 'DELETE',
+              headers: {'Content-Type': 'application/json'}
+            })
             changeScreen(null)
             dispatch({ type: REMOVE_TODO, id })
           }
@@ -60,20 +64,47 @@ export const TodoState = ({ children }) => {
   }
 
   const fetchTodos = async () => {
-    const response = await fetch(
-      'https://rn-todo-app-7b0ea.firebaseio.com/todos.json',
-      {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
-      }
-    )
-    const data = await response.json()
-    console.log('Fetch data', data)
-    const todos = Object.keys(data).map(key => ({ ...data[key], id: key }))
-    setTimeout(() => dispatch({ type: FETCH_TODOS, todos }), 5000)
+    showLoader()
+    clearError()
+    try{
+      const response = await fetch(
+        'https://rn-todo-app-7b0ea.firebaseio.com/todos.json',
+        {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
+        }
+      )
+      const data = await response.json()
+      console.log('Fetch data', data)
+      const todos = Object.keys(data).map(key => ({ ...data[key], id: key }))
+      setTimeout(() => dispatch({ type: FETCH_TODOS, todos }), 5000)
+    } catch (e) {
+      showError('Something Wrong')
+      console.log(e)
+    } finally {
+      hideLoader()
+    }
   }
 
-  const updateTodo = (id, title) => dispatch({ type: UPDATE_TODO, id, title })
+  const updateTodo = async (id, title) => {
+    clearError()
+    try {
+
+      let response = await fetch(`https://rn-todo-app-7b0ea.firebaseio.com/todos/${id}.json`,{
+        method: 'PATCH',
+        headers: {'Content-Type': 'application/json'},
+        body:JSON.stringify({title})
+      })
+      
+      let data = response.json()
+      console.log(data)
+      dispatch({ type: UPDATE_TODO, id, title })
+      console.log(data)
+    } catch (e) {
+        showError('Have an error')
+        console.log()
+    }
+  }
 
   const showLoader = () => dispatch({ type: SHOW_LOADER })
 

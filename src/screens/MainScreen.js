@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react'
-import { StyleSheet, View, FlatList, Image, Dimensions, Text } from 'react-native'
+import { StyleSheet, View, FlatList, Image, Dimensions, Text, Button } from 'react-native'
 import { AddTodo } from '../components/AddTodo'
 import { Todo } from '../components/Todo'
 import { THEME } from '../theme'
 import { TodoContext } from '../context/todo/todoContext'
 import { ScreenContext } from '../context/screen/screenContext'
+import { AppLoader } from '../components/ui/AppLoader'
+import { AppText } from '../components/ui/AppText'
 
 export const MainScreen = () => {
   const { addTodo, todos, removeTodo, fetchTodos, loading, error } = useContext(
@@ -35,7 +37,19 @@ export const MainScreen = () => {
     }
   })
 
-  let content = (
+  if(loading){
+    return <AppLoader />
+  }
+
+  if(error){
+    return <View style={styles.error}>
+      <AppText>{error}</AppText>
+      <Button title="Повторить" onPress={loadTodos}/>
+    </View>
+  }
+  
+  let content;
+  content = (
     <View style={{ width: deviceWidth }}>
       <FlatList
         keyExtractor={item => item.id.toString()}
@@ -58,7 +72,6 @@ export const MainScreen = () => {
   return (
     <View>
       <AddTodo onSubmit={addTodo} />
-
       {content}
     </View>
   )
@@ -69,11 +82,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 10,
-    height: 300
+    height: 300,
   },
   image: {
     width: '100%',
     height: '100%',
     resizeMode: 'contain'
-  }
+  },
 })
